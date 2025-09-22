@@ -99,6 +99,33 @@
 
 </main>
 
+  <script>
+  let cart = [];
+  
+  const cartCount = document.getElementById("cart-count");
+  const addToCartButtons = document.querySelectorAll(".add-to-cart");
+
+  addToCartButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const name = btn.dataset.name;
+      const price = parseFloat(btn.dataset.price);
+      
+      cart.push({ name, price });
+      cartCount.textContent = cart.length;
+      
+      // Save to localStorage so it persists across pages
+      localStorage.setItem("cart", JSON.stringify(cart));
+    });
+  });
+
+  // On page load, restore cart
+  window.addEventListener("load", () => {
+    const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart = savedCart;
+    cartCount.textContent = cart.length;
+  });
+</script>
+
   <footer>
     <div class="social-icons">
       <a href="#"><i class="fab fa-facebook"></i></a>
@@ -109,3 +136,4 @@
   </footer>
 </body>
 </html>>
+
