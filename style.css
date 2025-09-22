@@ -76,6 +76,11 @@ header {
   background-color: #590013;
 }
 
+.nav-links a.active {
+  color: #CDAA7D; /* highlight active page */
+  font-weight: 700;
+}
+
 .nav-cart {
   font-weight: bold;
   color: #fff;
@@ -625,3 +630,4 @@ body {
     font-size: 0.95em;
   }
 }
+
