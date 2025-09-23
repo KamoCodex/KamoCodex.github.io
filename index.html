@@ -131,6 +131,63 @@
     cart = savedCart;
     cartCount.textContent = cart.length;
   });
+
+    let cart = [];
+
+document.querySelectorAll('.add-to-cart').forEach(button => {
+  button.addEventListener('click', () => {
+    const id = button.getAttribute('data-id');
+    const name = button.getAttribute('data-name');
+    const price = parseFloat(button.getAttribute('data-price'));
+
+    // check if item already in cart
+    let item = cart.find(product => product.id === id);
+
+    if (item) {
+      item.quantity++;
+    } else {
+      cart.push({ id, name, price, quantity: 1 });
+    }
+
+    renderCart();
+  });
+});
+
+function renderCart() {
+  const cartItems = document.getElementById('cart-items');
+  const cartTotal = document.getElementById('cart-total');
+
+  cartItems.innerHTML = '';
+  let total = 0;
+
+  cart.forEach(item => {
+    total += item.price * item.quantity;
+    cartItems.innerHTML += `
+      <li>
+        ${item.name} - R${item.price} x 
+        <input type="number" value="${item.quantity}" min="1" 
+          onchange="updateQuantity('${item.id}', this.value)">
+        <button onclick="removeItem('${item.id}')">Remove</button>
+      </li>
+    `;
+  });
+
+  cartTotal.innerText = total.toFixed(2);
+}
+
+function updateQuantity(id, newQty) {
+  let item = cart.find(product => product.id === id);
+  if (item) {
+    item.quantity = parseInt(newQty);
+    renderCart();
+  }
+}
+
+function removeItem(id) {
+  cart = cart.filter(product => product.id !== id);
+  renderCart();
+}
+
 </script>
 
   <footer>
@@ -143,5 +200,6 @@
   </footer>
 </body>
 </html>>
+
 
 
